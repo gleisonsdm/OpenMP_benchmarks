@@ -8,3 +8,4 @@ Benchmarks to insert:
 - [ ] https://github.com/cavazos-lab/PolyBench-ACC/tree/master/OpenMP/stencils/convolution-2d
 - [ ] https://github.com/LLNL/dataracebench/tree/master/micro-benchmarks
 - [ ] https://github.com/benchmark-subsetting/NPB3.0-omp-C
+- [ ] https://github.com/mattoslf/UniBenchV2
