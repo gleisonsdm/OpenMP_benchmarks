@@ -28,30 +28,25 @@ static int do_verify = 0;
 int omp_num_threads = 40;
 
 static struct option long_options[] = {
-  /* name, has_arg, flag, val */
-  {"input", 1, NULL, 'i'},
-  {"size", 1, NULL, 's'},
-  {"verify", 0, NULL, 'v'},
-  {0,0,0,0}
-};
+    /* name, has_arg, flag, val */
+    {"input", 1, NULL, 'i'},
+    {"size", 1, NULL, 's'},
+    {"verify", 0, NULL, 'v'},
+    {0, 0, 0, 0}};
 
-extern void
-lud_omp(float *m, int matrix_dim);
+extern void lud_omp(float *m, int matrix_dim);
 
-int
-main ( int argc, char *argv[] )
-{
+int main(int argc, char *argv[]) {
   int matrix_dim = 32; /* default size */
-  int opt, option_index=0;
+  int opt, option_index = 0;
   func_ret_t ret;
   const char *input_file = NULL;
   float *m, *mm;
   stopwatch sw;
 
-	
-  while ((opt = getopt_long(argc, argv, "::vs:n:i:", 
-                            long_options, &option_index)) != -1 ) {
-    switch(opt){
+  while ((opt = getopt_long(argc, argv, "::vs:n:i:", long_options,
+                            &option_index)) != -1) {
+    switch (opt) {
     case 'i':
       input_file = optarg;
       break;
@@ -65,7 +60,8 @@ main ( int argc, char *argv[] )
       matrix_dim = atoi(optarg);
       printf("Generate input matrix internally, size =%d\n", matrix_dim);
       // fprintf(stderr, "Currently not supported, use -i instead\n");
-      // fprintf(stderr, "Usage: %s [-v] [-s matrix_size|-i input_file]\n", argv[0]);
+      // fprintf(stderr, "Usage: %s [-v] [-s matrix_size|-i input_file]\n",
+      // argv[0]);
       // exit(EXIT_FAILURE);
       break;
     case '?':
@@ -76,13 +72,16 @@ main ( int argc, char *argv[] )
       break;
     default:
       fprintf(stderr, "Usage: %s [-v] [-s matrix_size|-i input_file]\n",
-	      argv[0]);
+              argv[0]);
       exit(EXIT_FAILURE);
     }
   }
-  
-  if ( (optind < argc) || (optind == 1)) {
-    fprintf(stderr, "Usage: %s [-v] [-n no. of threads] [-s matrix_size|-i input_file]\n", argv[0]);
+
+  if ((optind < argc) || (optind == 1)) {
+    fprintf(
+        stderr,
+        "Usage: %s [-v] [-n no. of threads] [-s matrix_size|-i input_file]\n",
+        argv[0]);
     exit(EXIT_FAILURE);
   }
 
@@ -94,8 +93,7 @@ main ( int argc, char *argv[] )
       fprintf(stderr, "error create matrix from file %s\n", input_file);
       exit(EXIT_FAILURE);
     }
-  }
-  else if (matrix_dim) {
+  } else if (matrix_dim) {
     printf("Creating matrix internally size=%d\n", matrix_dim);
     ret = create_matrix(&m, matrix_dim);
     if (ret != RET_SUCCESS) {
@@ -104,33 +102,32 @@ main ( int argc, char *argv[] )
       exit(EXIT_FAILURE);
     }
   }
- 
+
   else {
     printf("No input file specified!\n");
     exit(EXIT_FAILURE);
-  } 
+  }
 
-  if (do_verify){
+  if (do_verify) {
     printf("Before LUD\n");
     /* print_matrix(m, matrix_dim); */
     matrix_duplicate(m, &mm, matrix_dim);
   }
 
-
   stopwatch_start(&sw);
   lud_omp(m, matrix_dim);
   stopwatch_stop(&sw);
-  printf("Time consumed(ms): %lf\n", 1000*get_interval_by_sec(&sw));
+  printf("Time consumed(ms): %lf\n", 1000 * get_interval_by_sec(&sw));
 
-  if (do_verify){
+  if (do_verify) {
     printf("After LUD\n");
     /* print_matrix(m, matrix_dim); */
     printf(">>>Verify<<<<\n");
-    lud_verify(mm, m, matrix_dim); 
+    lud_verify(mm, m, matrix_dim);
     free(mm);
   }
-  
+
   free(m);
 
   return EXIT_SUCCESS;
-}				/* ----------  end of function main  ---------- */
+} /* ----------  end of function main  ---------- */

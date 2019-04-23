@@ -4,85 +4,68 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void c_print_results( char   *name,
-                      char   class,
-                      int    n1, 
-                      int    n2,
-                      int    n3,
-                      int    niter,
-		      int    nthreads,
-                      double t,
-                      double mops,
-		      char   *optype,
-                      int    passed_verification,
-                      char   *npbversion,
-                      char   *compiletime,
-                      char   *cc,
-                      char   *clink,
-                      char   *c_lib,
-                      char   *c_inc,
-                      char   *cflags,
-                      char   *clinkflags,
-		      char   *rand)
-{
-    char *evalue="1000";
+void c_print_results(char *name, char class, int n1, int n2, int n3, int niter,
+                     int nthreads, double t, double mops, char *optype,
+                     int passed_verification, char *npbversion,
+                     char *compiletime, char *cc, char *clink, char *c_lib,
+                     char *c_inc, char *cflags, char *clinkflags, char *rand) {
+  char *evalue = "1000";
 
-    printf( "\n\n %s Benchmark Completed\n", name ); 
+  printf("\n\n %s Benchmark Completed\n", name);
 
-    printf( " Class           =                        %c\n", class );
+  printf(" Class           =                        %c\n", class);
 
-    if( n2 == 0 && n3 == 0 )
-        printf( " Size            =             %12d\n", n1 );   /* as in IS */
-    else
-        printf( " Size            =              %3dx%3dx%3d\n", n1,n2,n3 );
+  if (n2 == 0 && n3 == 0)
+    printf(" Size            =             %12d\n", n1); /* as in IS */
+  else
+    printf(" Size            =              %3dx%3dx%3d\n", n1, n2, n3);
 
-    printf( " Iterations      =             %12d\n", niter );
-    
-    printf( " Threads         =             %12d\n", nthreads );
- 
-    printf( " Time in seconds =             %12.2f\n", t );
+  printf(" Iterations      =             %12d\n", niter);
 
-    printf( " Mop/s total     =             %12.2f\n", mops );
+  printf(" Threads         =             %12d\n", nthreads);
 
-    printf( " Operation type  = %24s\n", optype);
+  printf(" Time in seconds =             %12.2f\n", t);
 
-    if( passed_verification )
-        printf( " Verification    =               SUCCESSFUL\n" );
-    else
-        printf( " Verification    =             UNSUCCESSFUL\n" );
+  printf(" Mop/s total     =             %12.2f\n", mops);
 
-    printf( " Version         =           %12s\n", npbversion );
+  printf(" Operation type  = %24s\n", optype);
 
-    printf( " Compile date    =             %12s\n", compiletime );
+  if (passed_verification)
+    printf(" Verification    =               SUCCESSFUL\n");
+  else
+    printf(" Verification    =             UNSUCCESSFUL\n");
 
-    printf( "\n Compile options:\n" );
+  printf(" Version         =           %12s\n", npbversion);
 
-    printf( "    CC           = %s\n", cc );
+  printf(" Compile date    =             %12s\n", compiletime);
 
-    printf( "    CLINK        = %s\n", clink );
+  printf("\n Compile options:\n");
 
-    printf( "    C_LIB        = %s\n", c_lib );
+  printf("    CC           = %s\n", cc);
 
-    printf( "    C_INC        = %s\n", c_inc );
+  printf("    CLINK        = %s\n", clink);
 
-    printf( "    CFLAGS       = %s\n", cflags );
+  printf("    C_LIB        = %s\n", c_lib);
 
-    printf( "    CLINKFLAGS   = %s\n", clinkflags );
+  printf("    C_INC        = %s\n", c_inc);
 
-    printf( "    RAND         = %s\n", rand );
+  printf("    CFLAGS       = %s\n", cflags);
+
+  printf("    CLINKFLAGS   = %s\n", clinkflags);
+
+  printf("    RAND         = %s\n", rand);
 #ifdef SMP
-    evalue = getenv("MP_SET_NUMTHREADS");
-    printf( "   MULTICPUS = %s\n", evalue );
+  evalue = getenv("MP_SET_NUMTHREADS");
+  printf("   MULTICPUS = %s\n", evalue);
 #endif
 
-/*    printf( "\n\n" );
-    printf( " Please send the results of this run to:\n\n" );
-    printf( " NPB Development Team\n" );
-    printf( " Internet: npb@nas.nasa.gov\n \n" );
-    printf( " If email is not available, send this to:\n\n" );
-    printf( " MS T27A-1\n" );
-    printf( " NASA Ames Research Center\n" );
-    printf( " Moffett Field, CA  94035-1000\n\n" );
-    printf( " Fax: 415-604-3957\n\n" );*/
+  /*    printf( "\n\n" );
+      printf( " Please send the results of this run to:\n\n" );
+      printf( " NPB Development Team\n" );
+      printf( " Internet: npb@nas.nasa.gov\n \n" );
+      printf( " If email is not available, send this to:\n\n" );
+      printf( " MS T27A-1\n" );
+      printf( " NASA Ames Research Center\n" );
+      printf( " Moffett Field, CA  94035-1000\n\n" );
+      printf( " Fax: 415-604-3957\n\n" );*/
 }
- 
